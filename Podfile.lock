@@ -1,0 +1,14 @@
+PODS:
+  - OAuthConsumer (1.0)
+
+DEPENDENCIES:
+  - OAuthConsumer (from `./OAuthConsumer`)
+
+EXTERNAL SOURCES:
+  OAuthConsumer:
+    :path: ./OAuthConsumer
+
+SPEC CHECKSUMS:
+  OAuthConsumer: 38ae55781e5b2e4ec2c5e966f504bbced232f2f2
+
+COCOAPODS: 0.29.0
