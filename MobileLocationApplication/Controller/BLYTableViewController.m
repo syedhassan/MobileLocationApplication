@@ -8,6 +8,7 @@
 
 #import "BLYTableViewController.h"
 #import "OAuthConsumer.h"
+#import "BLYTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface BLYTableViewController ()
@@ -16,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) NSNumber *pageNumber;
 @property (strong, atomic) NSCache *imageCache;
+@property (strong, atomic) NSCache *reviewStartImageCache;
 @property (strong, nonatomic) NSMutableArray *businesses;
 @end
 
@@ -24,10 +26,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self setup];
     [self downloadData];
-    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -37,10 +38,16 @@
 }
 
 - (void) setup {
-    
+    UILabel *locations = [[UILabel alloc] init];
+    locations.text = @"Locations";
+    locations.textColor = [UIColor whiteColor];
+    CGSize size = [locations.text sizeWithAttributes:@{NSFontAttributeName:locations.font}];
+    locations.frame = CGRectMake(0, 0, size.width, size.height);
+    self.navigationItem.titleView = locations;
     self.businesses = [[NSMutableArray alloc] initWithCapacity:60];
     self.pageNumber = [[NSNumber alloc] initWithInt:0];
     self.imageCache = [[NSCache alloc] init];
+    self.reviewStartImageCache = [[NSCache alloc] init];
     self.tableView.hidden = YES;
     self.activityIndicator.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
 }
@@ -60,9 +67,10 @@
     [request setHTTPMethod:@"GET"];
     
     OARequestParameter * qParam1 = [[OARequestParameter alloc] initWithName:@"term" value:@"food"];
-    OARequestParameter * qParam2 = [[OARequestParameter alloc] initWithName:@"location" value:@"San+Francisco"];
+    OARequestParameter * qParam2 = [[OARequestParameter alloc] initWithName:@"ll" value:@"41.882191,-87.640452"];
+    OARequestParameter * qParam4 = [[OARequestParameter alloc] initWithName:@"sort" value:@"1"];
     OARequestParameter * qParam3 = [[OARequestParameter alloc] initWithName:@"offset" value:[NSString stringWithFormat:@"%d", [self.businesses count]]];
-    [request setParameters:[NSArray arrayWithObjects:qParam1,qParam2,qParam3, nil]];
+    [request setParameters:[NSArray arrayWithObjects:qParam1,qParam2,qParam3,qParam4, nil]];
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
     [fetcher fetchDataWithRequest:request
@@ -80,8 +88,6 @@
 
 - (void)requestDidFinishWithData:(OAServiceTicket *)ticket {
     NSString *response= [[NSString alloc] initWithData:ticket.data encoding:NSUTF8StringEncoding];
-    //NSLog(@"Request success!%@", response);
-    
     NSError *err;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[response dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&err];
     
@@ -117,42 +123,85 @@
     return [self.businesses count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 90;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"BLYTableViewCell";
+    BLYTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+        cell.imageView.layer.cornerRadius = 2;
+        cell.imageView.clipsToBounds = YES;
     }
     
-    cell.textLabel.text = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"name"];
+    cell.imageView.image = nil;
+    
+    cell.businessName.text = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"name"];
+    
+    
+    NSNumber *distance = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"distance"];
+    
+    if (distance) {
+        CGFloat distanceInMts = [distance floatValue];
+        cell.businessDistance.text = [NSString stringWithFormat:@"%.2f miles away", (distanceInMts/1069)];
+    }
+    
+    cell.businessType.text = @"Not sure";
+    BOOL isClosed = [[[self.businesses objectAtIndex:indexPath.row] objectForKey:@"is_closed"] boolValue];
+    if (isClosed) {
+        cell.businessStatus.text = @"Closed";
+        cell.businessStatus.textColor = [UIColor lightGrayColor];
+    } else {
+        cell.businessStatus.text = @"Open";
+        cell.businessStatus.textColor = [UIColor colorWithRed:64.0/255.0 green:142.0/255.0 blue:35.0/255.0 alpha:1.0];
+    }
     NSString *imageURL = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"image_url"];
     
+    
     if (imageURL) {
-        UIImage *image = [self.imageCache objectForKey:imageURL];
-        if (image) {
-            cell.imageView.image = image;
-        } else {
-            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-            dispatch_async(queue, ^(void) {
-                
-                NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]];
-                UIImage *img = [[UIImage alloc] initWithData:imageData];
-                if (img) {
-                    [self.imageCache setObject:img forKey:imageURL];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if ([[tableView visibleCells] containsObject:cell]) {
-                            cell.imageView.image = img;
-                        }
-                    });
-                }
-            });
-        }
+        [self applyImageFromURl:imageURL toImageView:cell.imageView fromCache:self.imageCache forIndexPath:indexPath];
     } else {
         //Do default image for the business.
     }
+    
+    NSString *reviewImageURL = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"rating_img_url"];
+    if (reviewImageURL) {
+        [self applyImageFromURl:reviewImageURL toImageView:cell.reviewStarImageView fromCache:self.reviewStartImageCache forIndexPath:indexPath];
+    }
+    
     return cell;
+}
+
+- (void) applyImageFromURl:(NSString *)imageURL toImageView:(UIImageView *)imageView fromCache:(NSCache *)cache forIndexPath:(NSIndexPath *)indexPath {
+    UIImage *image = [cache objectForKey:imageURL];
+    if (image) {
+        imageView.image = image;
+    } else {
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+        dispatch_async(queue, ^(void) {
+            NSIndexPath *cellIndex = indexPath;
+            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]];
+            UIImage *img = [[UIImage alloc] initWithData:imageData];
+            if (img) {
+                [cache setObject:img forKey:imageURL];
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    BLYTableViewCell *c = (BLYTableViewCell *)[self.tableView cellForRowAtIndexPath:cellIndex];
+                    if ([[self.tableView visibleCells] containsObject:c]) {
+                        if (c) {
+                            imageView.image = img;
+                            [c setNeedsLayout];
+                        }
+                    }
+                });
+            }
+        });
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

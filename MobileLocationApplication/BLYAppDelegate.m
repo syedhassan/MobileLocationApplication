@@ -14,11 +14,13 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    // Override point for customization after application launch.
+    // Override point for customization after application launch
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] ;
     BLYTableViewController *controller = [[BLYTableViewController alloc] initWithNibName:@"BLYTableViewController" bundle:nil];
     
     self.navController = [[UINavigationController alloc]  initWithRootViewController:controller];
+
+    self.navController.navigationBar.barTintColor=[UIColor colorWithRed:44.0/255.0 green:152.0/255.0 blue:217.0/255.0 alpha:1.0];
     self.window.rootViewController = self.navController;
     
     [self.window makeKeyAndVisible];
@@ -28,6 +30,7 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     return YES;
 }
