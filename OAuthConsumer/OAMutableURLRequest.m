@@ -97,11 +97,6 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 
 - (void)prepare {
     // sign
-    NSLog(@"CONSUMER KEY = %@",self->consumer.key);
-    NSLog(@"CONSUMER SECRET = %@",self->consumer.secret);
-    NSLog(@"TOKEN KEY = %@", self->token.key);
-    NSLog(@"TOKEN SECRET = %@", self->token.secret);
-    NSLog(@"BASE STRING = %@", [self signatureBaseString]);
    signature = [signatureProvider signClearText:[self signatureBaseString]
                                       withSecret:[NSString stringWithFormat:@"%@&%@",
                                                   self->consumer.secret,
@@ -161,8 +156,6 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 	parameter = [[OARequestParameter alloc] initWithName:@"oauth_nonce" value:nonce];
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
 	parameter = [[OARequestParameter alloc] initWithName:@"oauth_version" value:@"1.0"] ;
-    [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
-    parameter = [[OARequestParameter alloc] initWithName:@"oauth_token" value:self->token.key] ;
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
 	
 	for(NSString *k in tokenParameters) {

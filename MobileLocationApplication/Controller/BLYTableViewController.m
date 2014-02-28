@@ -71,11 +71,11 @@
     [request setHTTPMethod:@"GET"];
     
     NSString *latLongString = [NSString stringWithFormat:@"%f,%f", self.latitude, self.longitude];
-    NSLog(@"Lat Long string = %@", latLongString);
     OARequestParameter * qParam1 = [[OARequestParameter alloc] initWithName:@"ll" value:latLongString];
     OARequestParameter * qParam2 = [[OARequestParameter alloc] initWithName:@"sort" value:@"1"];
+    OARequestParameter * qParam4 = [[OARequestParameter alloc] initWithName:@"limit" value:@"10"];
     OARequestParameter * qParam3 = [[OARequestParameter alloc] initWithName:@"offset" value:[NSString stringWithFormat:@"%d", [self.businesses count]]];
-    [request setParameters:[NSArray arrayWithObjects:qParam1,qParam2,qParam3,nil]];
+    [request setParameters:[NSArray arrayWithObjects:qParam1,qParam2,qParam3,qParam4,nil]];
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
     [fetcher fetchDataWithRequest:request
@@ -88,15 +88,16 @@
     NSString *response= [[NSString alloc] initWithData:ticket.data encoding:NSUTF8StringEncoding];
     NSError *err;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[response dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&err];
-    [[json objectForKey:@""] stringRepresentation];
-    NSLog(@"Response  %@", response);
-    if ([json objectForKey:@"error"]) {
+
+    //NSLog(@"Response  %@", response);
+    if ([json objectForKey:@"error"]) {//What is the error?
         NSString *msg = [[json objectForKey:@"error"] objectForKey:@"description"];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [[json objectForKey:@"error"] objectForKey:@"text"] message:msg delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         [self.activityIndicator stopAnimating];
         return;
     }
+    
     self.totalResults = [[json objectForKey:@"total"] integerValue];
     NSArray *bsn = [json objectForKey:@"businesses"];
     [self.businesses addObjectsFromArray:bsn];
@@ -174,7 +175,8 @@
         [self applyImageFromURl:imageURL toImageView:cell.imageView fromCache:self.imageCache forIndexPath:indexPath];
     } else {
         //Do default image for the business.
-        UIImage *testImage = [UIImage imageWithContentsOfFile:@"default.png"];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"default" ofType:@"png"];
+        UIImage *testImage = [UIImage imageWithContentsOfFile:filePath];
         cell.imageView.image = testImage;
     }
     
