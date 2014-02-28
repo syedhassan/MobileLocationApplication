@@ -97,16 +97,21 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 
 - (void)prepare {
     // sign
+    NSLog(@"CONSUMER KEY = %@",self->consumer.key);
+    NSLog(@"CONSUMER SECRET = %@",self->consumer.secret);
+    NSLog(@"TOKEN KEY = %@", self->token.key);
+    NSLog(@"TOKEN SECRET = %@", self->token.secret);
+    NSLog(@"BASE STRING = %@", [self signatureBaseString]);
    signature = [signatureProvider signClearText:[self signatureBaseString]
                                       withSecret:[NSString stringWithFormat:@"%@&%@",
-                                                  @"L48wA1c3Pwff8CWhLkDd9otKTcQ",
-                                                  @"LMru_smWv247_8sy1xWQmkCcnew"]];
+                                                  self->consumer.secret,
+                                                   self->token.secret]];
     
     // set OAuth headers
 	NSMutableArray *chunks = [[NSMutableArray alloc] init];
 	[chunks addObject:[NSString stringWithFormat:@"realm=\"%@\"", [realm encodedURLParameterString]]];
-	[chunks addObject:[NSString stringWithFormat:@"oauth_consumer_key=\"FtecbLHADAuMc1LeIVM_5Q\""]];
-    [chunks addObject:[NSString stringWithFormat:@"oauth_token=\"rr8H7lkCHYMEHt2mbB7aWmQyXaXyuiNC\""]];
+	[chunks addObject:[NSString stringWithFormat:@"oauth_consumer_key=\"%@\"", self->consumer.key]];
+    [chunks addObject:[NSString stringWithFormat:@"oauth_token=\"%@\"", self->token.key]];
 
 	NSDictionary *tokenParameters = [token parameters];
 	for (NSString *k in tokenParameters) {
@@ -146,7 +151,7 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 	NSArray *parameters = [self parameters];
 	NSMutableArray *parameterPairs = [[NSMutableArray alloc] initWithCapacity:(5 + [parameters count] + [tokenParameters count])];
     
-	OARequestParameter *parameter = [[OARequestParameter alloc] initWithName:@"oauth_consumer_key" value:@"FtecbLHADAuMc1LeIVM_5Q"];
+	OARequestParameter *parameter = [[OARequestParameter alloc] initWithName:@"oauth_consumer_key" value:self->consumer.key];
 	
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
 	parameter = [[OARequestParameter alloc] initWithName:@"oauth_signature_method" value:[signatureProvider name]];
@@ -157,7 +162,7 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
 	parameter = [[OARequestParameter alloc] initWithName:@"oauth_version" value:@"1.0"] ;
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
-    parameter = [[OARequestParameter alloc] initWithName:@"oauth_token" value:@"rr8H7lkCHYMEHt2mbB7aWmQyXaXyuiNC"] ;
+    parameter = [[OARequestParameter alloc] initWithName:@"oauth_token" value:self->token.key] ;
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
 	
 	for(NSString *k in tokenParameters) {

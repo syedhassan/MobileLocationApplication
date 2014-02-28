@@ -9,68 +9,73 @@
 #import "BLYTableViewController.h"
 #import "OAuthConsumer.h"
 #import "BLYTableViewCell.h"
-#import <QuartzCore/QuartzCore.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface BLYTableViewController ()
+@interface BLYTableViewController () <CLLocationManagerDelegate>
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (strong, nonatomic) NSNumber *pageNumber;
+@property (assign, nonatomic) NSUInteger totalResults;
 @property (strong, atomic) NSCache *imageCache;
 @property (strong, atomic) NSCache *reviewStartImageCache;
 @property (strong, nonatomic) NSMutableArray *businesses;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (assign, nonatomic) double latitude, longitude;
 @end
 
 @implementation BLYTableViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.businesses = [[NSMutableArray alloc] initWithCapacity:100];
+        self.imageCache = [[NSCache alloc] init];
+        self.reviewStartImageCache = [[NSCache alloc] init];
+        
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.delegate = self;
+        self.locationManager.distanceFilter = kCLDistanceFilterNone;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        [self.locationManager startUpdatingLocation];
+    }
+    return self;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self setup];
-    [self downloadData];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void) setup {
+    self.tableView.hidden = YES;
+    self.activityIndicator.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
     UILabel *locations = [[UILabel alloc] init];
     locations.text = @"Locations";
     locations.textColor = [UIColor whiteColor];
     CGSize size = [locations.text sizeWithAttributes:@{NSFontAttributeName:locations.font}];
-    locations.frame = CGRectMake(0, 0, size.width, size.height);
+    locations.bounds = CGRectMake(0, 0, size.width, size.height);
     self.navigationItem.titleView = locations;
-    self.businesses = [[NSMutableArray alloc] initWithCapacity:60];
-    self.pageNumber = [[NSNumber alloc] initWithInt:0];
-    self.imageCache = [[NSCache alloc] init];
-    self.reviewStartImageCache = [[NSCache alloc] init];
-    self.tableView.hidden = YES;
-    self.activityIndicator.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
 }
 
 - (void) downloadData {
-    NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"]];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"AppConfig" ofType:@"plist"]];
     
     OAConsumer *consumer = [[OAConsumer alloc] initWithKey:[dictionary objectForKey:@"ConsumerKey"] secret:[dictionary objectForKey:@"ConsumerSecret"]];
     OAToken *token = [[OAToken alloc] initWithKey:[dictionary objectForKey:@"Token"] secret:[dictionary objectForKey:@"TokenSecret"]];
-    NSURL *url = [NSURL URLWithString:@"http://api.yelp.com/v2/search"];
-    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
+    NSURL *searchURL = [NSURL URLWithString:@"http://api.yelp.com/v2/search"];
+    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:searchURL
                                                                    consumer:consumer
                                                                       token:token
                                                                       realm:nil
                                                           signatureProvider:nil];
-    
     [request setHTTPMethod:@"GET"];
     
-    OARequestParameter * qParam1 = [[OARequestParameter alloc] initWithName:@"term" value:@"food"];
-    OARequestParameter * qParam2 = [[OARequestParameter alloc] initWithName:@"ll" value:@"41.882191,-87.640452"];
-    OARequestParameter * qParam4 = [[OARequestParameter alloc] initWithName:@"sort" value:@"1"];
+    NSString *latLongString = [NSString stringWithFormat:@"%f,%f", self.latitude, self.longitude];
+    NSLog(@"Lat Long string = %@", latLongString);
+    OARequestParameter * qParam1 = [[OARequestParameter alloc] initWithName:@"ll" value:latLongString];
+    OARequestParameter * qParam2 = [[OARequestParameter alloc] initWithName:@"sort" value:@"1"];
     OARequestParameter * qParam3 = [[OARequestParameter alloc] initWithName:@"offset" value:[NSString stringWithFormat:@"%d", [self.businesses count]]];
-    [request setParameters:[NSArray arrayWithObjects:qParam1,qParam2,qParam3,qParam4, nil]];
+    [request setParameters:[NSArray arrayWithObjects:qParam1,qParam2,qParam3,nil]];
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
     [fetcher fetchDataWithRequest:request
@@ -79,25 +84,25 @@
                   didFailSelector:@selector(requestDidFailWithError:)];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 - (void)requestDidFinishWithData:(OAServiceTicket *)ticket {
     NSString *response= [[NSString alloc] initWithData:ticket.data encoding:NSUTF8StringEncoding];
     NSError *err;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[response dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&err];
-    
+    [[json objectForKey:@""] stringRepresentation];
+    NSLog(@"Response  %@", response);
+    if ([json objectForKey:@"error"]) {
+        NSString *msg = [[json objectForKey:@"error"] objectForKey:@"description"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [[json objectForKey:@"error"] objectForKey:@"text"] message:msg delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        [self.activityIndicator stopAnimating];
+        return;
+    }
+    self.totalResults = [[json objectForKey:@"total"] integerValue];
     NSArray *bsn = [json objectForKey:@"businesses"];
     [self.businesses addObjectsFromArray:bsn];
     
-    self.pageNumber = [NSNumber numberWithInt:[self.pageNumber integerValue] + 1];
-    
+    //self.pageNumber = [NSNumber numberWithInt:[self.pageNumber integerValue] + 1];
     [self.tableView reloadData];
-    NSLog(@"Total No of rows = %d", [self.businesses count]);
     
     self.tableView.hidden = NO;
     self.backgroundView.hidden = NO;
@@ -106,20 +111,18 @@
 }
 
 - (void)requestDidFailWithError:(OAServiceTicket *)ticket {
-    NSLog(@"ERROR!!!!");
+    NSLog(@"ERROR!!!! %@",ticket);
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return [self.businesses count];
 }
 
@@ -138,20 +141,25 @@
         cell.imageView.layer.cornerRadius = 2;
         cell.imageView.clipsToBounds = YES;
     }
-    
-    cell.imageView.image = nil;
+    cell.imageView.image = nil; cell.reviewStarImageView.image = nil;
     
     cell.businessName.text = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"name"];
     
+    cell.businessType.text = @"";
+    NSArray *categories = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"categories"];
+    if (categories) {//For simplicity let's take the first category.
+        NSArray *firstCategory = [categories firstObject];
+        if (firstCategory) {
+            cell.businessType.text = [firstCategory firstObject];
+        }
+    }
     
     NSNumber *distance = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"distance"];
-    
     if (distance) {
         CGFloat distanceInMts = [distance floatValue];
         cell.businessDistance.text = [NSString stringWithFormat:@"%.2f miles away", (distanceInMts/1069)];
     }
     
-    cell.businessType.text = @"Not sure";
     BOOL isClosed = [[[self.businesses objectAtIndex:indexPath.row] objectForKey:@"is_closed"] boolValue];
     if (isClosed) {
         cell.businessStatus.text = @"Closed";
@@ -160,16 +168,17 @@
         cell.businessStatus.text = @"Open";
         cell.businessStatus.textColor = [UIColor colorWithRed:64.0/255.0 green:142.0/255.0 blue:35.0/255.0 alpha:1.0];
     }
+    
     NSString *imageURL = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"image_url"];
-    
-    
     if (imageURL) {
         [self applyImageFromURl:imageURL toImageView:cell.imageView fromCache:self.imageCache forIndexPath:indexPath];
     } else {
         //Do default image for the business.
+        UIImage *testImage = [UIImage imageWithContentsOfFile:@"default.png"];
+        cell.imageView.image = testImage;
     }
     
-    NSString *reviewImageURL = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"rating_img_url"];
+    NSString *reviewImageURL = [[self.businesses objectAtIndex:indexPath.row] objectForKey:@"rating_img_url_small"];
     if (reviewImageURL) {
         [self applyImageFromURl:reviewImageURL toImageView:cell.reviewStarImageView fromCache:self.reviewStartImageCache forIndexPath:indexPath];
     }
@@ -205,68 +214,20 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row == [self.businesses count] - 3) {
-        NSLog(@"Reloading more data");
+    if(indexPath.row == [self.businesses count] - 3 && [self.businesses count] < self.totalResults) {
         [self.activityIndicator startAnimating];
         [self downloadData];
     }
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    CLLocation *location = [locations lastObject];
+    if (location) {
+        self.latitude = location.coordinate.latitude;
+        self.longitude = location.coordinate.longitude;
+        [self.locationManager stopUpdatingLocation];
+        [self downloadData];
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
-}
- 
- */
 
 @end

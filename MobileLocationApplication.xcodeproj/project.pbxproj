@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		75CBA5C83CE644AE9927186A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4D79939C3E4C0787456B11 /* libPods.a */; };
-		9937D33A18BDA8CF00D3CD5F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9937D33918BDA8CF00D3CD5F /* Info.plist */; };
+		9937D33A18BDA8CF00D3CD5F /* AppConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9937D33918BDA8CF00D3CD5F /* AppConfig.plist */; };
 		9937D33C18BFB11200D3CD5F /* BLYTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9937D33B18BFB11200D3CD5F /* BLYTableViewCell.xib */; };
 		9937D33F18BFB24200D3CD5F /* BLYTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9937D33E18BFB24200D3CD5F /* BLYTableViewCell.m */; };
 		99C5B17F18BD9D58006E24E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99C5B17E18BD9D58006E24E4 /* Foundation.framework */; };
@@ -25,6 +25,7 @@
 		99C5B1A418BD9D58006E24E4 /* MobileLocationApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B1A318BD9D58006E24E4 /* MobileLocationApplicationTests.m */; };
 		99C5B1B818BD9E89006E24E4 /* BLYTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B1B618BD9E89006E24E4 /* BLYTableViewController.m */; };
 		99C5B1B918BD9E89006E24E4 /* BLYTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C5B1B718BD9E89006E24E4 /* BLYTableViewController.xib */; };
+		99CE995918C0444A00C758EE /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CE995818C0444A00C758EE /* default.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +40,7 @@
 
 /* Begin PBXFileReference section */
 		5F4D79939C3E4C0787456B11 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		9937D33918BDA8CF00D3CD5F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9937D33918BDA8CF00D3CD5F /* AppConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppConfig.plist; sourceTree = "<group>"; };
 		9937D33B18BFB11200D3CD5F /* BLYTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BLYTableViewCell.xib; sourceTree = "<group>"; };
 		9937D33D18BFB24200D3CD5F /* BLYTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLYTableViewCell.h; sourceTree = "<group>"; };
 		9937D33E18BFB24200D3CD5F /* BLYTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLYTableViewCell.m; sourceTree = "<group>"; };
@@ -62,6 +63,7 @@
 		99C5B1B518BD9E89006E24E4 /* BLYTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLYTableViewController.h; path = Controller/BLYTableViewController.h; sourceTree = "<group>"; };
 		99C5B1B618BD9E89006E24E4 /* BLYTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLYTableViewController.m; path = Controller/BLYTableViewController.m; sourceTree = "<group>"; };
 		99C5B1B718BD9E89006E24E4 /* BLYTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLYTableViewController.xib; path = Controller/BLYTableViewController.xib; sourceTree = "<group>"; };
+		99CE995818C0444A00C758EE /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		A4487042BE75422883805E28 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,17 +127,18 @@
 		99C5B18418BD9D58006E24E4 /* MobileLocationApplication */ = {
 			isa = PBXGroup;
 			children = (
+				99CE995818C0444A00C758EE /* default.png */,
 				99C5B18D18BD9D58006E24E4 /* BLYAppDelegate.h */,
 				99C5B18E18BD9D58006E24E4 /* BLYAppDelegate.m */,
-				99C5B19018BD9D58006E24E4 /* Images.xcassets */,
-				99C5B18518BD9D58006E24E4 /* Supporting Files */,
 				99C5B1B518BD9E89006E24E4 /* BLYTableViewController.h */,
 				99C5B1B618BD9E89006E24E4 /* BLYTableViewController.m */,
 				99C5B1B718BD9E89006E24E4 /* BLYTableViewController.xib */,
-				9937D33918BDA8CF00D3CD5F /* Info.plist */,
+				9937D33918BDA8CF00D3CD5F /* AppConfig.plist */,
 				9937D33D18BFB24200D3CD5F /* BLYTableViewCell.h */,
 				9937D33E18BFB24200D3CD5F /* BLYTableViewCell.m */,
 				9937D33B18BFB11200D3CD5F /* BLYTableViewCell.xib */,
+				99C5B19018BD9D58006E24E4 /* Images.xcassets */,
+				99C5B18518BD9D58006E24E4 /* Supporting Files */,
 			);
 			path = MobileLocationApplication;
 			sourceTree = "<group>";
@@ -248,10 +251,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9937D33C18BFB11200D3CD5F /* BLYTableViewCell.xib in Resources */,
-				9937D33A18BDA8CF00D3CD5F /* Info.plist in Resources */,
+				9937D33A18BDA8CF00D3CD5F /* AppConfig.plist in Resources */,
 				99C5B1B918BD9E89006E24E4 /* BLYTableViewController.xib in Resources */,
 				99C5B18918BD9D58006E24E4 /* InfoPlist.strings in Resources */,
 				99C5B19118BD9D58006E24E4 /* Images.xcassets in Resources */,
+				99CE995918C0444A00C758EE /* default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
