@@ -10,5 +10,7 @@
 	<string>rr8H7lkCHYMEHt2mbB7aWmQyXaXyuiNC</string>
 	<key>TokenSecret</key>
 	<string>LMru_smWv247_8sy1xWQmkCcnew</string>
+	<key>GeoCodeKey</key>
+	<string>AIzaSyCuR5af4fifSI-5IKiBuGvajDq2oKuIBpM</string>
 </dict>
 </plist>

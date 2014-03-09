@@ -19,10 +19,8 @@
     BLYTableViewController *controller = [[BLYTableViewController alloc] initWithNibName:NSStringFromClass([BLYTableViewController class]) bundle:nil];
     
     self.navController = [[UINavigationController alloc]  initWithRootViewController:controller];
-
     self.navController.navigationBar.barTintColor=[UIColor colorWithRed:44.0/255.0 green:152.0/255.0 blue:217.0/255.0 alpha:1.0];
     self.window.rootViewController = self.navController;
-    
     [self.window makeKeyAndVisible];
 
     

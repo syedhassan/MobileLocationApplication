@@ -11,6 +11,10 @@
 		9937D33A18BDA8CF00D3CD5F /* AppConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9937D33918BDA8CF00D3CD5F /* AppConfig.plist */; };
 		9937D33C18BFB11200D3CD5F /* BLYTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9937D33B18BFB11200D3CD5F /* BLYTableViewCell.xib */; };
 		9937D33F18BFB24200D3CD5F /* BLYTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9937D33E18BFB24200D3CD5F /* BLYTableViewCell.m */; };
+		99B29AFC18C3E3FC00A5E27B /* BLYDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B29AFA18C3E3FC00A5E27B /* BLYDetailViewController.m */; };
+		99B29AFD18C3E3FC00A5E27B /* BLYDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99B29AFB18C3E3FC00A5E27B /* BLYDetailViewController.xib */; };
+		99B29B0018C3EDFA00A5E27B /* BLYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B29AFF18C3EDFA00A5E27B /* BLYBaseViewController.m */; };
+		99B29B0318C43AFE00A5E27B /* BLYSingletonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B29B0218C43AFE00A5E27B /* BLYSingletonManager.m */; };
 		99C5B17F18BD9D58006E24E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99C5B17E18BD9D58006E24E4 /* Foundation.framework */; };
 		99C5B18118BD9D58006E24E4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99C5B18018BD9D58006E24E4 /* CoreGraphics.framework */; };
 		99C5B18318BD9D58006E24E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99C5B18218BD9D58006E24E4 /* UIKit.framework */; };
@@ -26,6 +30,9 @@
 		99C5B1B818BD9E89006E24E4 /* BLYTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B1B618BD9E89006E24E4 /* BLYTableViewController.m */; };
 		99C5B1B918BD9E89006E24E4 /* BLYTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C5B1B718BD9E89006E24E4 /* BLYTableViewController.xib */; };
 		99CE995918C0444A00C758EE /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CE995818C0444A00C758EE /* default.png */; };
+		99CE995C18C29B4800C758EE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CE995B18C29B4800C758EE /* MapKit.framework */; };
+		99CE997118C3067400C758EE /* BLYSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CE996F18C3067400C758EE /* BLYSortViewController.m */; };
+		99CE997218C3067400C758EE /* BLYSortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99CE997018C3067400C758EE /* BLYSortViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +51,13 @@
 		9937D33B18BFB11200D3CD5F /* BLYTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BLYTableViewCell.xib; sourceTree = "<group>"; };
 		9937D33D18BFB24200D3CD5F /* BLYTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLYTableViewCell.h; sourceTree = "<group>"; };
 		9937D33E18BFB24200D3CD5F /* BLYTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLYTableViewCell.m; sourceTree = "<group>"; };
+		99B29AF918C3E3FC00A5E27B /* BLYDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLYDetailViewController.h; path = Controller/BLYDetailViewController.h; sourceTree = "<group>"; };
+		99B29AFA18C3E3FC00A5E27B /* BLYDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLYDetailViewController.m; path = Controller/BLYDetailViewController.m; sourceTree = "<group>"; };
+		99B29AFB18C3E3FC00A5E27B /* BLYDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLYDetailViewController.xib; path = Controller/BLYDetailViewController.xib; sourceTree = "<group>"; };
+		99B29AFE18C3EDFA00A5E27B /* BLYBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLYBaseViewController.h; path = Controller/BLYBaseViewController.h; sourceTree = "<group>"; };
+		99B29AFF18C3EDFA00A5E27B /* BLYBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLYBaseViewController.m; path = Controller/BLYBaseViewController.m; sourceTree = "<group>"; };
+		99B29B0118C43AFE00A5E27B /* BLYSingletonManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLYSingletonManager.h; sourceTree = "<group>"; };
+		99B29B0218C43AFE00A5E27B /* BLYSingletonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLYSingletonManager.m; sourceTree = "<group>"; };
 		99C5B17B18BD9D58006E24E4 /* MobileLocationApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileLocationApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99C5B17E18BD9D58006E24E4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		99C5B18018BD9D58006E24E4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -65,6 +79,10 @@
 		99C5B1B718BD9E89006E24E4 /* BLYTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLYTableViewController.xib; path = Controller/BLYTableViewController.xib; sourceTree = "<group>"; };
 		99CE995818C0444A00C758EE /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		99CE995A18C0599600C758EE /* Yelp-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Yelp-icon.png"; sourceTree = "<group>"; };
+		99CE995B18C29B4800C758EE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		99CE996E18C3067400C758EE /* BLYSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLYSortViewController.h; path = Controller/BLYSortViewController.h; sourceTree = "<group>"; };
+		99CE996F18C3067400C758EE /* BLYSortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLYSortViewController.m; path = Controller/BLYSortViewController.m; sourceTree = "<group>"; };
+		99CE997018C3067400C758EE /* BLYSortViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLYSortViewController.xib; path = Controller/BLYSortViewController.xib; sourceTree = "<group>"; };
 		A4487042BE75422883805E28 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CE995C18C29B4800C758EE /* MapKit.framework in Frameworks */,
 				99C5B18118BD9D58006E24E4 /* CoreGraphics.framework in Frameworks */,
 				99C5B18318BD9D58006E24E4 /* UIKit.framework in Frameworks */,
 				99C5B17F18BD9D58006E24E4 /* Foundation.framework in Frameworks */,
@@ -117,6 +136,7 @@
 		99C5B17D18BD9D58006E24E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				99CE995B18C29B4800C758EE /* MapKit.framework */,
 				99C5B17E18BD9D58006E24E4 /* Foundation.framework */,
 				99C5B18018BD9D58006E24E4 /* CoreGraphics.framework */,
 				99C5B18218BD9D58006E24E4 /* UIKit.framework */,
@@ -141,6 +161,16 @@
 				9937D33B18BFB11200D3CD5F /* BLYTableViewCell.xib */,
 				99C5B19018BD9D58006E24E4 /* Images.xcassets */,
 				99C5B18518BD9D58006E24E4 /* Supporting Files */,
+				99CE996E18C3067400C758EE /* BLYSortViewController.h */,
+				99CE996F18C3067400C758EE /* BLYSortViewController.m */,
+				99CE997018C3067400C758EE /* BLYSortViewController.xib */,
+				99B29AF918C3E3FC00A5E27B /* BLYDetailViewController.h */,
+				99B29AFA18C3E3FC00A5E27B /* BLYDetailViewController.m */,
+				99B29AFB18C3E3FC00A5E27B /* BLYDetailViewController.xib */,
+				99B29AFE18C3EDFA00A5E27B /* BLYBaseViewController.h */,
+				99B29AFF18C3EDFA00A5E27B /* BLYBaseViewController.m */,
+				99B29B0118C43AFE00A5E27B /* BLYSingletonManager.h */,
+				99B29B0218C43AFE00A5E27B /* BLYSingletonManager.m */,
 			);
 			path = MobileLocationApplication;
 			sourceTree = "<group>";
@@ -224,6 +254,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Belly;
 				TargetAttributes = {
+					99C5B17A18BD9D58006E24E4 = {
+						DevelopmentTeam = 4WVA6F394E;
+					};
 					99C5B19518BD9D58006E24E4 = {
 						TestTargetID = 99C5B17A18BD9D58006E24E4;
 					};
@@ -252,10 +285,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CE997218C3067400C758EE /* BLYSortViewController.xib in Resources */,
 				9937D33C18BFB11200D3CD5F /* BLYTableViewCell.xib in Resources */,
 				9937D33A18BDA8CF00D3CD5F /* AppConfig.plist in Resources */,
 				99C5B1B918BD9E89006E24E4 /* BLYTableViewController.xib in Resources */,
 				99C5B18918BD9D58006E24E4 /* InfoPlist.strings in Resources */,
+				99B29AFD18C3E3FC00A5E27B /* BLYDetailViewController.xib in Resources */,
 				99C5B19118BD9D58006E24E4 /* Images.xcassets in Resources */,
 				99CE995918C0444A00C758EE /* default.png in Resources */,
 			);
@@ -310,7 +345,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				99C5B18F18BD9D58006E24E4 /* BLYAppDelegate.m in Sources */,
+				99B29AFC18C3E3FC00A5E27B /* BLYDetailViewController.m in Sources */,
+				99B29B0018C3EDFA00A5E27B /* BLYBaseViewController.m in Sources */,
+				99CE997118C3067400C758EE /* BLYSortViewController.m in Sources */,
 				99C5B18B18BD9D58006E24E4 /* main.m in Sources */,
+				99B29B0318C43AFE00A5E27B /* BLYSingletonManager.m in Sources */,
 				99C5B1B818BD9E89006E24E4 /* BLYTableViewController.m in Sources */,
 				9937D33F18BFB24200D3CD5F /* BLYTableViewCell.m in Sources */,
 			);
@@ -432,10 +471,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MobileLocationApplication/MobileLocationApplication-Prefix.pch";
 				INFOPLIST_FILE = "MobileLocationApplication/MobileLocationApplication-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -446,10 +488,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MobileLocationApplication/MobileLocationApplication-Prefix.pch";
 				INFOPLIST_FILE = "MobileLocationApplication/MobileLocationApplication-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BLYBaseViewController.h"
 
-@interface BLYTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface BLYTableViewController : BLYBaseViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end
