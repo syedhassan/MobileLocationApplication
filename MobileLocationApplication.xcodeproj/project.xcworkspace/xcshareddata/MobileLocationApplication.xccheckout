@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>5CFFA560-537C-4389-B59F-CEBCBA1B129A</string>
+	<string>8413718D-8362-40FF-AD67-B98FBCC0FEFB</string>
 	<key>IDESourceControlProjectName</key>
 	<string>MobileLocationApplication</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>CE0197C2-7898-430B-BC5E-E85C7575E19B</key>
+		<key>D92EE4015A70FAC7E72691ED900D984623D4D01C</key>
 		<string>https://github.com/syedhassan/MobileLocationApplication.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>MobileLocationApplication.xcworkspace</string>
+	<string>MobileLocationApplication.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>CE0197C2-7898-430B-BC5E-E85C7575E19B</key>
-		<string>..</string>
+		<key>D92EE4015A70FAC7E72691ED900D984623D4D01C</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/syedhassan/MobileLocationApplication.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>CE0197C2-7898-430B-BC5E-E85C7575E19B</string>
+	<string>D92EE4015A70FAC7E72691ED900D984623D4D01C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>CE0197C2-7898-430B-BC5E-E85C7575E19B</string>
+			<string>D92EE4015A70FAC7E72691ED900D984623D4D01C</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MobileLocationApplication</string>
 		</dict>

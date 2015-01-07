@@ -59,7 +59,7 @@
 }
 
 - (void) setup {
-    
+    [self.backgroundView subviews];
     self.activityIndicator.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
     
     UILabel *locations = [[UILabel alloc] init];
@@ -340,8 +340,8 @@
         NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithCapacity:10];
         NSString *latLongString = [NSString stringWithFormat:@"%f,%f", self.latitude, self.longitude];
         [params setObject:latLongString forKey:@"ll"];
-        [params setObject:[[NSNumber alloc] initWithInt:[self.sortValue ]] forKey:@"sortValue"];
-        [params setObject:[[NSNumber alloc] initWithInt:[self.businesses count]] forKey:@"offset"];
+        [params setObject:[[NSNumber alloc] initWithInteger:self.sortValue] forKey:@"sortValue"];
+        [params setObject:[[NSNumber alloc] initWithInteger:[self.businesses count]] forKey:@"offset"];
         [self downloadDataForApi:@"search" withLimit:nil andParams:params];
     }
 }

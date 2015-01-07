@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		75CBA5C83CE644AE9927186A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4D79939C3E4C0787456B11 /* libPods.a */; };
+		99191C4C1A4B7CD600932728 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CE995818C0444A00C758EE /* default.png */; };
 		9937D33A18BDA8CF00D3CD5F /* AppConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9937D33918BDA8CF00D3CD5F /* AppConfig.plist */; };
 		9937D33C18BFB11200D3CD5F /* BLYTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9937D33B18BFB11200D3CD5F /* BLYTableViewCell.xib */; };
 		9937D33F18BFB24200D3CD5F /* BLYTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9937D33E18BFB24200D3CD5F /* BLYTableViewCell.m */; };
@@ -29,7 +30,6 @@
 		99C5B1A418BD9D58006E24E4 /* MobileLocationApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B1A318BD9D58006E24E4 /* MobileLocationApplicationTests.m */; };
 		99C5B1B818BD9E89006E24E4 /* BLYTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B1B618BD9E89006E24E4 /* BLYTableViewController.m */; };
 		99C5B1B918BD9E89006E24E4 /* BLYTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C5B1B718BD9E89006E24E4 /* BLYTableViewController.xib */; };
-		99CE995918C0444A00C758EE /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 99CE995818C0444A00C758EE /* default.png */; };
 		99CE995C18C29B4800C758EE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CE995B18C29B4800C758EE /* MapKit.framework */; };
 		99CE997118C3067400C758EE /* BLYSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CE996F18C3067400C758EE /* BLYSortViewController.m */; };
 		99CE997218C3067400C758EE /* BLYSortViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99CE997018C3067400C758EE /* BLYSortViewController.xib */; };
@@ -288,11 +288,11 @@
 				99CE997218C3067400C758EE /* BLYSortViewController.xib in Resources */,
 				9937D33C18BFB11200D3CD5F /* BLYTableViewCell.xib in Resources */,
 				9937D33A18BDA8CF00D3CD5F /* AppConfig.plist in Resources */,
+				99191C4C1A4B7CD600932728 /* default.png in Resources */,
 				99C5B1B918BD9E89006E24E4 /* BLYTableViewController.xib in Resources */,
 				99C5B18918BD9D58006E24E4 /* InfoPlist.strings in Resources */,
 				99B29AFD18C3E3FC00A5E27B /* BLYDetailViewController.xib in Resources */,
 				99C5B19118BD9D58006E24E4 /* Images.xcassets in Resources */,
-				99CE995918C0444A00C758EE /* default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
